@@ -57,7 +57,7 @@ export default function styleConstructor(theme = {}, calendarHeight) {
       opacity: 1,
       paddingTop: 5,
       paddingBottom: 0,
-      borderRadius:10,``
+      borderRadius:10,
       flexDirection: 'column',
       alignItems: 'flex-start',
       overflow: 'hidden',
