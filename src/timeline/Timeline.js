@@ -13,11 +13,11 @@ import moment from 'moment';
 import _ from 'lodash';
 import styleConstructor from './style';
 
-const LEFT_MARGIN = 60 - 1;
+const LEFT_MARGIN = 60 - 1 + 15;
 const TEXT_LINE_HEIGHT = 17;
 
 function range(from, to) {
-  return Array.from(Array(to), (_, i) => from + i);
+  return Array.from(Array(to), (_, i) => from + i*0.5);
 }
 
 let {width: dimensionWidth} = Dimensions.get('window');
@@ -47,7 +47,7 @@ export default class Timeline extends React.PureComponent {
   constructor(props) {
     super(props);
     const {start, end} = this.props;
-    this.calendarHeight = (end - start) * 100;
+    this.calendarHeight = (end - start) * 30;
     this.styles = styleConstructor(props.styles, this.calendarHeight);
     const width = dimensionWidth - LEFT_MARGIN;
     const packedEvents = populateEvents(props.events, width, start);
@@ -95,16 +95,19 @@ export default class Timeline extends React.PureComponent {
 
     return range(start, end + 1).map((i, index) => {
       let timeText;
+      let h = (Math.floor(i) < 10) ? '0'+Math.floor(i) : Math.floor(i);
+      let m = (60*(i - h) < 10) ? '0' + 60*(i - h) : 60*(i - h);
+
       if (i === start) {
         timeText = '';
       } else if (i < 12) {
-        timeText = !format24h ? `${i} AM` : `${i}:00`;
+        timeText = !format24h ? `${i} AM` : `${h}:${m}`;
       } else if (i === 12) {
-        timeText = !format24h ? `${i} PM` : `${i}:00`;
+        timeText = !format24h ? `${i} PM` : `${h}:${m}`;
       } else if (i === 24) {
         timeText = !format24h ? '12 AM' : '23:59';
       } else {
-        timeText = !format24h ? `${i - 12} PM` : `${i}:00`;
+        timeText = !format24h ? `${i - 12} PM` : `${h}:${m}`;
       }
       return [
         <Text
@@ -142,7 +145,7 @@ export default class Timeline extends React.PureComponent {
     const {packedEvents} = this.state;
     let events = packedEvents.map((event, i) => {
       const style = {
-        left: event.left,
+        right: event.left,
         height: event.height,
         width: event.width,
         top: event.top,
@@ -187,7 +190,7 @@ export default class Timeline extends React.PureComponent {
 
     return (
       <View>
-        <View style={{marginLeft: LEFT_MARGIN}}>{events}</View>
+        <View style={{marginRight: LEFT_MARGIN}}>{events}</View>
       </View>
     );
   }

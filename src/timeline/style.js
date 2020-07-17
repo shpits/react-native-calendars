@@ -57,19 +57,20 @@ export default function styleConstructor(theme = {}, calendarHeight) {
       opacity: 1,
       paddingTop: 5,
       paddingBottom: 0,
+      borderRadius:10,``
       flexDirection: 'column',
       alignItems: 'flex-start',
       overflow: 'hidden',
       ...theme.event
     },
     eventTitle: {
-      color: '#615B73',
+      color: 'white',
       fontWeight: '600',
       minHeight: 15,
       ...theme.eventTitle
     },
     eventSummary: {
-      color: '#615B73',
+      color: 'white',
       fontSize: 12,
       flexWrap: 'wrap',
       ...theme.eventSummary
@@ -78,7 +79,7 @@ export default function styleConstructor(theme = {}, calendarHeight) {
       marginTop: 3,
       fontSize: 10,
       fontWeight: 'bold',
-      color: '#615B73',
+      color: 'white',
       flexWrap: 'wrap',
       ...theme.eventTimes
     },

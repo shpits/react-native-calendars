@@ -1,6 +1,6 @@
 // @flow
 import moment from 'moment';
-const offset = 100;
+const offset = 60;
 
 function buildEvent(column, left, width, dayStart) {
   const startTime = moment(column.start);
