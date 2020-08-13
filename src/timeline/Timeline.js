@@ -63,9 +63,15 @@ export default class Timeline extends React.PureComponent {
   componentDidUpdate(prevProps) {
     const width = dimensionWidth - LEFT_MARGIN;
     const {events: prevEvents, start: prevStart = 0} = prevProps;
-    const {events, start = 0} = this.props;
+    const {events, start = 0,end } = this.props;
     if(prevEvents !== events || prevStart !== start) {
+      const packedEvents = populateEvents(events, width, start);
+      let initPosition =
+        _.min(_.map(packedEvents, 'top')) - this.calendarHeight / (end - start);
+      const verifiedInitPosition = initPosition < 0 ? 0 : initPosition;
+
       this.setState({
+        _scrollY: verifiedInitPosition,
         packedEvents: populateEvents(events, width, start)
       });
     }
@@ -197,7 +203,8 @@ export default class Timeline extends React.PureComponent {
 
   render() {
     return (
-      <ScrollView
+      <ScrollView style={{height:250}}
+        bounces={false}
         ref={ref => (this._scrollView = ref)}
         contentContainerStyle={[
           this.styles.contentStyle,
