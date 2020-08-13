@@ -152,8 +152,9 @@ export default class Timeline extends React.PureComponent {
     let events = packedEvents.map((event, i) => {
       const style = {
         right: event.left,
+        left:event.indent,
         height: event.height,
-        width: event.width,
+        maxWidth:event.width,
         top: event.top,
         backgroundColor: event.color ? event.color : '#add8e6'
       };
